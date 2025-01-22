@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog\Post;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -12,10 +13,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $postsTable = Config::get('filamentblog.tables.prefix') . 'posts';
-        $categoriesTable = Config::get('filamentblog.tables.prefix') . 'categories';
-
-        $blogs = \DB::table($postsTable)
+        $blogs = Post::query()
             ->select('id', 'title', 'slug', 'sub_title', 'cover_photo_path', 'published_at')
             ->where('status', 'published')
             ->whereNotNull('published_at')
@@ -49,11 +47,7 @@ class BlogController extends Controller
      */
     public function show($slug)
     {
-        $postsTable = Config::get('filamentblog.tables.prefix') . 'posts';
-        $categoriesTable = Config::get('filamentblog.tables.prefix') . 'categories';
-
-        $blog = \DB::table($postsTable)
-            ->where('slug', $slug)
+        $blog = Post::where('slug', $slug)
             ->where('status', 'published')
             ->whereNotNull('published_at')
             ->first();
