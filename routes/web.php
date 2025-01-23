@@ -8,3 +8,7 @@ Route::get('/', function () {
 Route::get('/hs', function () {
     return view('welcome');
 });
+
+Route::get('/bs', function () {
+    return view('welcome');
+});
